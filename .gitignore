@@ -62,5 +62,8 @@ local.properties
 ### Slotify ###
 includes/config.php
 
+### VS Code ###
+.vscode
+
 
 # End of https://www.gitignore.io/api/eclipse
