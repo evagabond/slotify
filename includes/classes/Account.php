@@ -59,7 +59,6 @@ class Account {
     $result = mysqli_query($this->con, "INSERT INTO users VALUES (NULL, '$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
 
     return $result;
-
   }
 
   // Validate username
