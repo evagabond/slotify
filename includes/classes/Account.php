@@ -42,7 +42,7 @@ class Account {
     }
   }
 
-  // Display error message to user depending on the error
+  // Display error message to user
   public function getError($error) {
     if(!in_array($error, $this->errorArray)) {
       $error = "";
@@ -103,7 +103,7 @@ class Account {
       return;
     }
 
-    $checkEmailQuery = mysqli_query($this->con, "Select email FROM users WHERE email='$em'");
+    $checkEmailQuery = mysqli_query($this->con, "SELECT email FROM users WHERE email='$em'");
     if (mysqli_num_rows($checkEmailQuery) != 0) {
       array_push($this->errorArray, Constants::$emailTaken);
       return;

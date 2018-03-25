@@ -1,4 +1,4 @@
-    /*
+/*
  * Register page
  */
 
@@ -24,7 +24,7 @@ Login
 #loginForm {display: none;}
 #loginContainer * {
     color: #fff;
-    font-family: "Helvetica Neue", "Helvetica", "Arial", san-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: normal;
     line-height: 1em;
     box-sizing: border-box;    

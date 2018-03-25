@@ -75,7 +75,6 @@ function getInputValue($name) {
 					<p>
 						<?php echo $account->getError(Constants::$usernameCharacters); ?>
 						<?php echo $account->getError(Constants::$usernameTaken); ?>
-
 						<label for="username">Username</label>
 						<input id="username" name="username" type="text" placeholder="e.g. evagabond" value="<?php getInputValue('username') ?>" required>
 					</p>
