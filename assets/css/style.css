@@ -7,6 +7,13 @@
      margin: 0;
      height: 100%;
  }
+ * {
+     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+     color: #fff;
+ }
+ /*--------------------------------------------------------------
+ nowPlayingContainer
+ --------------------------------------------------------------*/ 
  #nowPlayingBarContainer {
     background-color: #282828;    
     position: fixed;
@@ -25,6 +32,10 @@
     width: 30%;
     min-width: 180px;
  }
+ #nowPlayingRight {
+     position: relative;
+     margin-top: 16px;
+ }
  #nowPlayingCenter {
      width: 40%;
      max-width: 700px;
@@ -32,7 +43,13 @@
      flex-direction: column;
      align-items: center;
  }
- #nowPlayingBar .content {width: 100%;}
+ #nowPlayingBar .content {
+     width: 100%;
+     height: 57px;
+ }
+ /*--------------------------------------------------------------
+ Player Controls
+ --------------------------------------------------------------*/ 
  .playerControls .buttons {
     margin: 0 auto;
     display: table;
@@ -42,7 +59,119 @@
     border: 0;
     vertical-align: middle;    
  }
+ .controlButton:hover {cursor: pointer;}
  .controlButton img {
     width: 20px;
     height: 20px;
+ }
+ .controlButton.play img,
+ .controlButton.pause img {
+     width: 32px;
+     height: 32px;
+ }
+ .progressTime {
+    text-align: center;
+    font-size: 11px;
+    min-width: 40px;
+    color: #a0a0a0;
+ }
+ .playbackBar {display: flex;}
+ .progressBar {
+    width: 100%;
+    height: 12px;
+    display: inline-flex;
+    cursor: pointer;
+ }
+ .progressBarBG {
+    background-color: #404040;
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+ }
+ .progress {
+    background-color: #a0a0a0;
+    height: 4px;
+    width: 0;
+    border-radius: 2px;
+ }
+ .playbackBar .progressBar {margin-top: 3px;}
+ /*--------------------------------------------------------------
+ Now Playing Left
+ --------------------------------------------------------------*/
+ #nowPlayingLeft .albumArtwork {
+    height: 100%;
+    max-width: 57px;
+    margin-right: 15px;
+    float: left;
+    background-size: cover;
+ }
+ #nowPlayingLeft .trackInfo {
+    display: table;
+ }
+ #nowPlayingLeft .trackInfo .trackName {
+    margin: 6px 0;
+    display: inline-block;
+    width: 100%;
+ }
+ #nowPlayingLeft .trackInfo .artistName span {
+     font-size: 12px;
+     color: #a0a0a0;
+ }
+ /*--------------------------------------------------------------
+ Now Playing Right
+ --------------------------------------------------------------*/
+ #nowPlayingRight .volumeBar {
+    width: 180px;
+    position: absolute;
+    right: 0;
+ }
+ #nowPlayingRight .volumeBar .progressBar {width: 125px;}
+ /*--------------------------------------------------------------
+ Top Container
+ --------------------------------------------------------------*/ 
+ #topContainer {
+     min-height: 100%;
+     width: 100%;
+ }
+ /*nav bar*/
+#navBarContainer {
+    background-color: #000;
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    top: 0;    
+    left: 0;
+ }
+ #topContainer .navBar {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+ }
+ .logo {margin-bottom: 15px;}
+ .logo img {
+     width: 32px;
+ }
+ .navBar .group {
+    border-top: 1px solid #a0a0a0;
+    padding: 10px 0;
+ }
+ .navItem {
+     padding: 10px 0;
+     font-size: 14px;
+     font-weight: 700;
+     display: block;
+     letter-spacing: 1px;
+     position: relative;
+ }
+ .navItemLink {
+     color: #a0a0a0;
+     text-decoration: none;
+ }
+ .navItemLink:hover {color: #fff;}
+ .navItemLink .icon {
+    position: absolute;
+    right: 0;
+    top: 6px;
+    width: 25px;
  }
