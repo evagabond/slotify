@@ -7,6 +7,11 @@
      margin: 0;
      height: 100%;
  }
+ * {
+     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+     color: #fff;
+     letter-spacing: 1px;
+ }
  body {
     background-color: #181818;
     font-size: 14px;
@@ -110,9 +115,7 @@
     float: left;
     background-size: cover;
  }
- #nowPlayingLeft .trackInfo {
-    display: table;
- }
+ #nowPlayingLeft .trackInfo {display: table;}
  #nowPlayingLeft .trackInfo .trackName {
     margin: 6px 0;
     display: inline-block;
@@ -185,6 +188,25 @@
     padding-bottom: 90px;
     width: calc(100% - 220px);
  }
- #mainContent {
-     padding: 0 20px;
+ #mainContent {padding: 0 20px;}
+ .pageHeadingBig {
+    padding: 20px;
+    text-align: center;
  }
+ .gridViewItem {
+     display: inline-block;
+     margin: 0 20px 20px 0;
+     width: 29%;
+     max-width: 200px;
+     min-width: 150px;
+ }
+ .gridViewItem a {text-decoration: none;}
+ .gridViewItem img {width: 100%;}
+.gridViewInfo {
+    font-weight: 300;
+    text-align: center;
+    padding: 5px 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
