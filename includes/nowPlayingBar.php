@@ -16,10 +16,11 @@ $jsonArray = json_encode($resultArray);
 
 <script>
 // To Check contents of $jsonArray object
-// console.log(<?php // echo $jsonArray; ?> );
+// console.log(<?php //echo $jsonArray; ?> );
 
 $(document).ready(function() {
   currentPlaylist = <?php echo $jsonArray; ?>;
+  // audioElement object
   audioElement = new Audio();
 
   // currentPlaylist[0] set from Line 22
@@ -34,14 +35,15 @@ function setTrack(trackId, newPlaylist, play) {
   // function(data) is the result returned by the Ajax call, which is the JSON data
   $.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) {
 
-    // Converting JSON data into an Object so that JS can read/understand it
+    // Converting JSON data into JS Object called track, so that JS can read it
+    // If not JSON data isn't parsed JS won't be able to read it, resulting in an error
     var track = JSON.parse(data);
     // console.log(track);
 
     // Creating jQuery Object to output Track Title in Line 89
     $(".trackName span").text(track.title);
 
-    // AJAX call to get Artist data from DB. 
+    // AJAX call to get Artist data from DB
     // track.artist is got from the Ajax call in Line 35
     // function(data) is the result returned by the Ajax call, which is the JSON data
     $.post("includes/handlers/ajax/getArtistJson.php", { artistId: track.artist }, function(data) {
@@ -51,7 +53,7 @@ function setTrack(trackId, newPlaylist, play) {
       $(".artistName span").text(artist.name);
     });
 
-     // AJAX call to get Album data from DB.
+     // AJAX call to get Album data from DB
      // track.album is got from the Ajax call in Line 35
     // function(data) is the result returned by the Ajax call, which is the JSON data 
     $.post("includes/handlers/ajax/getAlbumJson.php", { albumId: track.album }, function(data) {
@@ -63,8 +65,8 @@ function setTrack(trackId, newPlaylist, play) {
 
     // track.path is got from the Ajax call in Line 35
     // path refers to the column name in the songs table
-    audioElement.setTrack(track.path);
-    audioElement.play();
+    audioElement.setTrack(track);
+    playSong();
 
   });
 
@@ -74,6 +76,12 @@ function setTrack(trackId, newPlaylist, play) {
 }
 
 function playSong() {
+  if(audioElement.audio.currentTime === 0) {
+    // console.log(audioElement);
+    // AJAX call to UPDATE song play count in the songs table
+    $.post("includes/handlers/ajax/updatePlays.php", { songId: audioElement.currentlyPlaying.id });   
+  }
+  
   $(".controlButton.play").hide();
   $(".controlButton.pause").show();
   audioElement.play();
