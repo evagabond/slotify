@@ -9,12 +9,13 @@ else {
 
 $album = new Album($con, $albumId);
 /* 
- * No need to create Artist object like we have created Album object in Line 10, because 
- * Artist object has already been created in Album.php-Line 38. Instead, replace the object 
- * creation in Line 16 with the class-method call in Line 17
+ * Calling Artist object in Line 15 below will be futile, because to get the correct Artist, we first have to use the 
+ * album ID received from Line 4 above to derive the relevant Artist ID from the album table and then pass this
+ * Artist ID to the method call in line 18 to get the exact/correct Artist Name. * 
  */
  // $artist = new Artist($con, $album['artist']); 
 $artist = $album->getArtist();
+
 ?>
 
 <div class="entityInfo">
@@ -41,6 +42,9 @@ $artist = $album->getArtist();
         foreach($songIdArray as $songId) {
 
             $albumSong = new Song($con, $songId);
+            /* Here too the logic is same as expalined in Line 12 above, as to why we not using 
+            * $album->getArtist() from Line 17 and instead using the object->method-call in Line 48 below            *
+            */
             $albumArtist = $albumSong->getArtist();              
             
             echo "<li class='tracklistRow'>
@@ -71,8 +75,6 @@ $artist = $album->getArtist();
     
     </div>
 
-
 </div>
-
           
 <?php include 'includes/footer.php'; ?>

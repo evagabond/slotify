@@ -14,7 +14,7 @@ class Artist {
     public function getName() {
         // Fetch artist details
         $artistQuery = mysqli_query($this->con, "SELECT * FROM artists WHERE id='$this->id'");
-        $artist = mysqli_fetch_array($artistQuery);
+        $artist = mysqli_fetch_assoc($artistQuery);
         return $artist['name'];
     }
 }
