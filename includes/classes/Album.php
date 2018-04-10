@@ -32,7 +32,7 @@ class Album {
 
     /*
     * To get the Artist Name we have to make use of the Artist Class because
-    * the album table just has the artist id artist table is storing the Artist Name
+    * the album table just has the artist id. The artist table is storing the Artist Name
     */
     public function getArtist() {
         return new Artist($this->con, $this->artistId);
@@ -55,7 +55,7 @@ class Album {
             return $result['COUNT(*)'];
         */
 
-        // Find total no. of songs in an album
+        // Count total no. of songs in an album
         $query = mysqli_query($this->con, "SELECT COUNT(*) AS total FROM songs WHERE album='$this->id'");
         $result = mysqli_fetch_assoc($query);
         return $result['total'];      

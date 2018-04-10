@@ -47,13 +47,22 @@ function setTrack(trackId, newPlaylist, play) {
     $.post("includes/handlers/ajax/getArtistJson.php", { artistId: track.artist }, function(data) {
       var artist = JSON.parse(data);
       //console.log(artist.name);
-
       // Creating jQuery Object to output Track Title in Line 93
       $(".artistName span").text(artist.name);
+    });
 
-    });     
+     // AJAX call to get Album data from DB.
+     // track.album is got from the Ajax call in Line 35
+    // function(data) is the result returned by the Ajax call, which is the JSON data 
+    $.post("includes/handlers/ajax/getAlbumJson.php", { albumId: track.album }, function(data) {
+      var album = JSON.parse(data);
+      //console.log(album.title);
+      //console.log(album.genre);
+      $(".albumLink img").attr("src", album.artworkPath);      
+    }); 
 
     // track.path is got from the Ajax call in Line 35
+    // path refers to the column name in the songs table
     audioElement.setTrack(track.path);
     audioElement.play();
 
@@ -84,7 +93,7 @@ function pauseSong() {
     <div id="nowPlayingLeft">
       <div class="content">
         <span class="albumLink">
-          <img class="albumArtwork" src="assets/images/artwork/album-cover-default.jpg" alt="Album cover">
+          <img class="albumArtwork" src="" alt="Album cover">
         </span>
 
         <div class="trackInfo">
