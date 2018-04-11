@@ -27,25 +27,26 @@ $(document).ready(function() {
   setTrack(currentPlaylist[0], currentPlaylist, false); 
 });
 
-// trackID = currentPlaylist[0] from Line 26, which is the value of the first Song Id fetched from the DB
+// trackID = currentPlaylist[0] from Line 27, which is the value of the first Song Id fetched from the DB
 function setTrack(trackId, newPlaylist, play) {  
 
-  // AJAX call to get song data from DB. songId is got from jsonArray[0] in Line 13, 26
+  // AJAX call to get song data from DB. songId is got from jsonArray[0] in Line 14, 27
   // jsonArray[0] is the value of the first Song ID fetched from the DB
-  // function(data) is the result returned by the Ajax call, which is the JSON data
+  // songId: trackId is the Ajax input
+  // function(data) is the output returned by the Ajax call, which is in the form of JSON data  
   $.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) {
 
     // Converting JSON data into JS Object called track, so that JS can read it
-    // If not JSON data isn't parsed JS won't be able to read it, resulting in an error
+    // If JSON data isn't parsed JS won't be able to read it, resulting in an error
     var track = JSON.parse(data);
     // console.log(track);
 
-    // Creating jQuery Object to output Track Title in Line 89
+    // Creating jQuery Object to output Track Title in Line 89. title is the column name in the songs db
     $(".trackName span").text(track.title);
 
     // AJAX call to get Artist data from DB
-    // track.artist is got from the Ajax call in Line 35
-    // function(data) is the result returned by the Ajax call, which is the JSON data
+    // track.artist is got from the Ajax call in Line 36
+    // function(data) is the output returned by the Ajax call, which is the JSON data
     $.post("includes/handlers/ajax/getArtistJson.php", { artistId: track.artist }, function(data) {
       var artist = JSON.parse(data);
       //console.log(artist.name);
@@ -54,8 +55,8 @@ function setTrack(trackId, newPlaylist, play) {
     });
 
      // AJAX call to get Album data from DB
-     // track.album is got from the Ajax call in Line 35
-    // function(data) is the result returned by the Ajax call, which is the JSON data 
+     // track.album is got from the Ajax call in Line 36
+    // function(data) is the output returned by the Ajax call, which is the JSON data 
     $.post("includes/handlers/ajax/getAlbumJson.php", { albumId: track.album }, function(data) {
       var album = JSON.parse(data);
       //console.log(album.title);
@@ -63,7 +64,7 @@ function setTrack(trackId, newPlaylist, play) {
       $(".albumLink img").attr("src", album.artworkPath);      
     }); 
 
-    // track.path is got from the Ajax call in Line 35
+    // track.path is got from the Ajax call in Line 36
     // path refers to the column name in the songs table
     audioElement.setTrack(track);
     playSong();
