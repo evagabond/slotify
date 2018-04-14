@@ -117,6 +117,15 @@ function nextSong() {
   setTrack(trackToPlay, currentPlaylist, true);
 }
 
+// Sets the repeat icon
+function setRepeat() {
+  // This logic is mainly used to set the default repeat icon when the song page loads initially
+  //  The default repeat icon is 'repeat.png'
+  repeat = !repeat;
+  var imageName = repeat ? "repeat-active.png" : "repeat.png";
+  $(".controlButton.repeat img").attr("src", "assets/images/icons/" + imageName);
+}
+
 // trackID = currentPlaylist[0] from Line 27, which is the value of the first Song Id fetched from the DB
 function setTrack(trackId, newPlaylist, play) {
   
@@ -218,27 +227,27 @@ function pauseSong() {
       <div class="content playerControls">
 
         <div class="buttons">
-          <button class="controlButton shuffle" title="Shuffle button">
+          <button class="controlButton shuffle" title="Shuffle">
             <img src="assets/images/icons/shuffle.png" alt="Shuffle">
           </button>
 
-          <button class="controlButton previous" title="Previous button">
+          <button class="controlButton previous" title="Previous song">
             <img src="assets/images/icons/previous.png" alt="Previous">
           </button>
 
-          <button class="controlButton pause" title="Pause button" style="display:none;">
+          <button class="controlButton pause" title="Pause song" style="display:none;">
             <img src="assets/images/icons/pause.png" alt="Pause" onclick="pauseSong()">
           </button>
 
-          <button class="controlButton play" title="Play button" onclick="playSong()">
+          <button class="controlButton play" title="Play song" onclick="playSong()">
             <img src="assets/images/icons/play.png" alt="Play">
           </button>
 
-          <button class="controlButton next" title="Next button" onclick="nextSong()">
+          <button class="controlButton next" title="Next song" onclick="nextSong()">
             <img src="assets/images/icons/next.png" alt="Next">
           </button>
 
-          <button class="controlButton repeat" title="Repeat button">
+          <button class="controlButton repeat" title="Repeat song" onClick="setRepeat()">
             <img src="assets/images/icons/repeat.png" alt="Repeat">
           </button>
 
