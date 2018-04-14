@@ -18,12 +18,16 @@ $jsonArray = json_encode($resultArray);
 // To Check contents of $jsonArray object
 // console.log(<?php //echo $jsonArray; ?> );
 
+// document.ready means when the page first loads
 $(document).ready(function() {
   currentPlaylist = <?php echo $jsonArray; ?>;
   // audioElement object
   audioElement = new Audio();
   // currentPlaylist[0] set from Line 22
   setTrack(currentPlaylist[0], currentPlaylist, false);
+  // Displays the volume to full depicting the max volume when the page is loaded
+  // Note that the function below has nothing to do with the volume being set to full
+  updateVolumeProgressBar(audioElement.audio);
   
   // Progress bar controller
   $(".playbackBar .progressBar").mousedown(function() {
