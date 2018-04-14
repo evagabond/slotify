@@ -9,6 +9,7 @@ var audioElement;
 var mouseDown = false;
 // Sets the currentIndex of playlist to 0
 var currentIndex = 0;
+// Initially repeat is set to false else the song will go on repeating when next song button is pressed
 var repeat = false;
 
 function formatTime(seconds) {
@@ -50,9 +51,14 @@ function Audio() {
 
     this.currentlyPlaying;
 
-    // Read more on audio element here: https://tinyurl.com/y76sl54x
+    // Read more on Audio Element here: https://tinyurl.com/y76sl54x
     // all the 'this' declaration below belong to the audio object in line 28   
-    this.audio = document.createElement('audio'); 
+    this.audio = document.createElement('audio');
+
+    // Play or Repeat Next Song when Current Song ends
+    this.audio.addEventListener("ended", function() {
+        nextSong();
+    });
 
     // canplay means when the audio player is finally ready/able to play a song
     // This is only possible when there are no errors 

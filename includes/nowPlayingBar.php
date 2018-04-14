@@ -42,18 +42,18 @@ $(document).ready(function() {
 
   $(".playbackBar .progressBar").mousemove(function(e) {
     if(mouseDown) {
-      //Note the song's time depending upon the position of mouse curson on the progress bar
+      //Note the song's current time depending upon the position of mouse cursor on the progress bar
       // this refers to the progress bar viz. 'playbackBar .progressBar'
       timeFromOffset(e, this);
     }
   });
 
-  // Notes the current time even when mouse is up but in the progressBar region
+  // Notes the current time even when the mouse cursor is up, but stil hovered over the progressBar region
   $(".playbackBar .progressBar").mouseup(function(e) {
     timeFromOffset(e,this);   
   });
 
-  // Set mouseDown to false if the curson has moved away from the progress bar region
+  // Set mouseDown to false if the mouse has moved away from the progress bar region
   $(document).mouseup(function() {
     mouseDown = false;
   });
@@ -75,16 +75,15 @@ $(document).ready(function() {
     }
   });
 
-  // Notes the current time even when mouse is up but in the volume bar region
+  // Notes the current time even when mouse is up but still hovered over the volume bar region
   $(".volumeBar .progressBar").mouseup(function(e) {
-    // this refers to .volumeBar .progressBar
+    // this refers to the class '.volumeBar .progressBar'
     var percentage =  e.offsetX / $(this).width();
 
     if(percentage >=0 && percentage <=1) {        
         audioElement.audio.volume = percentage;
       }
   });
-
 });
 
 // Offset means how far the current progress bar position is or has moved from its initial position
@@ -94,8 +93,11 @@ function timeFromOffset(mouse, progressBar) {
   audioElement.setTime(seconds);
 }
 
-// Play next song
+// Next/Repeat song
 function nextSong() {
+
+  // Repeat Song
+  // 'repeat' is set from the 'class repeat' at Line 254 below
   if(repeat) {
     // If repeat is true then set the song time to 0 and then play the song
     audioElement.setTime(0);
@@ -103,32 +105,34 @@ function nextSong() {
     return;
   }
 
-  // Check if currentIndex is equal to max value of the playlist index, and if yes then set currentIndex to 0.
-  //  What this does is if currentIndex reaches max value of playlist, say 9, meaning there are 9 songs in the album
-  // When user presses next button then the first song is played
+  // Next Song
+  // Checks if currentIndex is equal to max index value of the playlist; if yes then set currentIndex value to 0.
+  // What this does is if currentIndex reaches max value of playlist, say 9, meaning there are 9 songs in the album
+  // now when the user presses the Next button; since now the index is set to 0, the first song will be played 
   if(currentIndex == currentPlaylist.length-1) {
     currentIndex = 0;
   } else {
     currentIndex++;
   }
+  // This is saying use the currentPlaylist to get the item at this currentIndex
   var trackToPlay = currentPlaylist[currentIndex];
   // trackToPlay is the trackId, currentPlaylist is the new playlist
   // true means whether to play the song automatically or not
   setTrack(trackToPlay, currentPlaylist, true);
 }
 
-// Sets the repeat icon
+// Set the Repeat icon
 function setRepeat() {
   // This logic is mainly used to set the default repeat icon when the song page loads initially
-  //  The default repeat icon is 'repeat.png'
+  // The default repeat icon is 'repeat.png'
   repeat = !repeat;
   var imageName = repeat ? "repeat-active.png" : "repeat.png";
+  // controlButton.repeat is the class name at Line 254 
   $(".controlButton.repeat img").attr("src", "assets/images/icons/" + imageName);
 }
 
-// trackID = currentPlaylist[0] from Line 27, which is the value of the first Song Id fetched from the DB
-function setTrack(trackId, newPlaylist, play) {
-  
+// trackID = currentPlaylist[0] from Line 28, which is the value of the first Song Id fetched from the DB
+function setTrack(trackId, newPlaylist, play) {    
   // Sets the current song index of the playlist
   currentIndex = currentPlaylist.indexOf(trackId);
   // When the song is changed, pause the song. You won't notice the song pausing, but it's good to have this feature
@@ -248,7 +252,7 @@ function pauseSong() {
           </button>
 
           <button class="controlButton repeat" title="Repeat song" onClick="setRepeat()">
-            <img src="assets/images/icons/repeat.png" alt="Repeat">
+            <img src="assets/images/icons/repeat.png" alt="Repeat song">
           </button>
 
         </div>
