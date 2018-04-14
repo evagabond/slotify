@@ -96,8 +96,15 @@ function timeFromOffset(mouse, progressBar) {
 
 // Play next song
 function nextSong() {
+  if(repeat) {
+    // If repeat is true then set the song time to 0 and then play the song
+    audioElement.setTime(0);
+    playSong();
+    return;
+  }
+
   // Check if currentIndex is equal to max value of the playlist index, and if yes then set currentIndex to 0.
-  //  What ths does is if currentIndex reaches max value of playlist, say 9, meaning there are 9 songs in the album
+  //  What this does is if currentIndex reaches max value of playlist, say 9, meaning there are 9 songs in the album
   // When user presses next button then the first song is played
   if(currentIndex == currentPlaylist.length-1) {
     currentIndex = 0;
@@ -111,15 +118,18 @@ function nextSong() {
 }
 
 // trackID = currentPlaylist[0] from Line 27, which is the value of the first Song Id fetched from the DB
-function setTrack(trackId, newPlaylist, play) {  
+function setTrack(trackId, newPlaylist, play) {
+  
+  // Sets the current song index of the playlist
+  currentIndex = currentPlaylist.indexOf(trackId);
+  // When the song is changed, pause the song. You won't notice the song pausing, but it's good to have this feature
+  pauseSong();
 
   // AJAX call to get song data from DB. songId is got from jsonArray[0] in Line 14, 28
   // jsonArray[0] is the value of the first Song ID fetched from the DB
   // songId: trackId is the Ajax input
   // function(data) is the output returned by the Ajax call, which is in the form of JSON 
-  $.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) {
-
-    currentIndex = currentPlaylist.indexOf(trackId);
+  $.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) {   
 
     // Converting JSON data into JS Object called track, so that JS can read it
     // If JSON data isn't parsed into JSON JS won't be able to read it, resulting in an error
@@ -153,7 +163,6 @@ function setTrack(trackId, newPlaylist, play) {
     // path refers to the column name in the songs table
     audioElement.setTrack(track);
     playSong();
-
   });
 
   if(play) {
@@ -225,7 +234,7 @@ function pauseSong() {
             <img src="assets/images/icons/play.png" alt="Play">
           </button>
 
-          <button class="controlButton next" title="Next button">
+          <button class="controlButton next" title="Next button" onclick="nextSong()">
             <img src="assets/images/icons/next.png" alt="Next">
           </button>
 

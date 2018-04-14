@@ -9,6 +9,7 @@ var audioElement;
 var mouseDown = false;
 // Sets the currentIndex of playlist to 0
 var currentIndex = 0;
+var repeat = false;
 
 function formatTime(seconds) {
     var time = Math.round(seconds);
