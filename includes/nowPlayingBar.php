@@ -94,14 +94,32 @@ function timeFromOffset(mouse, progressBar) {
   audioElement.setTime(seconds);
 }
 
+// Play next song
+function nextSong() {
+  // Check if currentIndex is equal to max value of the playlist index, and if yes then set currentIndex to 0.
+  //  What ths does is if currentIndex reaches max value of playlist, say 9, meaning there are 9 songs in the album
+  // When user presses next button then the first song is played
+  if(currentIndex == currentPlaylist.length-1) {
+    currentIndex = 0;
+  } else {
+    currentIndex++;
+  }
+  var trackToPlay = currentPlaylist[currentIndex];
+  // trackToPlay is the trackId, currentPlaylist is the new playlist
+  // true means whether to play the song automatically or not
+  setTrack(trackToPlay, currentPlaylist, true);
+}
+
 // trackID = currentPlaylist[0] from Line 27, which is the value of the first Song Id fetched from the DB
 function setTrack(trackId, newPlaylist, play) {  
 
-  // AJAX call to get song data from DB. songId is got from jsonArray[0] in Line 14, 27
+  // AJAX call to get song data from DB. songId is got from jsonArray[0] in Line 14, 28
   // jsonArray[0] is the value of the first Song ID fetched from the DB
   // songId: trackId is the Ajax input
   // function(data) is the output returned by the Ajax call, which is in the form of JSON 
   $.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) {
+
+    currentIndex = currentPlaylist.indexOf(trackId);
 
     // Converting JSON data into JS Object called track, so that JS can read it
     // If JSON data isn't parsed into JSON JS won't be able to read it, resulting in an error

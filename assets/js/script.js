@@ -7,6 +7,8 @@ var currentPlaylist = Array();
 // Audio class is instantiated by audioElement-object at nowPlayingBar.php-Line-24
 var audioElement;
 var mouseDown = false;
+// Sets the currentIndex of playlist to 0
+var currentIndex = 0;
 
 function formatTime(seconds) {
     var time = Math.round(seconds);
