@@ -93,7 +93,30 @@ function timeFromOffset(mouse, progressBar) {
   audioElement.setTime(seconds);
 }
 
-// Next/Repeat song
+// Play Previous song
+function prevSong() {
+  // If currentTime of 'current song' is more than 3 seconds then song's currentTime will be set to 0
+  // This is how all audio player functions
+  // if(audioElement.audio.currentTime >= 3 || currentIndex == 0 ) {
+  if(audioElement.audio.currentTime >= 3) {
+    audioElement.setTime(0);
+  }
+  // trackToPlay is the trackId, currentPlaylist is the new playlist
+  // true means whether to play the song automatically or not
+  else if(currentIndex == 0 && audioElement.audio.currentTime < 3) {
+    currentIndex = currentPlaylist.length - 1;
+    // console.log('INDEX = ' + currentIndex);
+    setTrack(currentPlaylist[currentIndex], currentPlaylist, true);
+  }
+  else {
+    // If currentTime is less than 3 seconds then play Previous song
+    currentIndex = currentIndex - 1;
+    setTrack(currentPlaylist[currentIndex], currentPlaylist, true);
+  }
+}
+
+
+// Paly Next song or Repeat song
 function nextSong() {
 
   // Repeat Song
@@ -235,7 +258,7 @@ function pauseSong() {
             <img src="assets/images/icons/shuffle.png" alt="Shuffle">
           </button>
 
-          <button class="controlButton previous" title="Previous song">
+          <button class="controlButton previous" title="Previous song" onclick="prevSong()">
             <img src="assets/images/icons/previous.png" alt="Previous">
           </button>
 
