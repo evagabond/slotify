@@ -25,6 +25,7 @@ $(document).ready(function() {
   // currentPlaylist[0] set from Line 22
   setTrack(currentPlaylist[0], currentPlaylist, false);
   
+  // Progress bar controller
   $(".playbackBar .progressBar").mousedown(function() {
     mouseDown = true;
   });
@@ -37,7 +38,7 @@ $(document).ready(function() {
     }
   });
 
-  // Note the time even when mouse is up but in the progressBar region
+  // Notes the current time even when mouse is up but in the progressBar region
   $(".playbackBar .progressBar").mouseup(function(e) {
     timeFromOffset(e,this);   
   });
@@ -45,6 +46,33 @@ $(document).ready(function() {
   // Set mouseDown to false if the curson has moved away from the progress bar region
   $(document).mouseup(function() {
     mouseDown = false;
+  });
+
+  // Volume bar controller
+  $(".volumeBar .progressBar").mousedown(function() {
+    mouseDown = true;
+  });
+
+  $(".volumeBar .progressBar").mousemove(function(e) {
+    if(mouseDown) {
+
+      // this refers to .volumeBar .progressBar
+      var percentage =  e.offsetX / $(this).width();
+
+      if(percentage >=0 && percentage <=1) {        
+        audioElement.audio.volume = percentage;
+      }      
+    }
+  });
+
+  // Notes the current time even when mouse is up but in the volume bar region
+  $(".volumeBar .progressBar").mouseup(function(e) {
+    // this refers to .volumeBar .progressBar
+    var percentage =  e.offsetX / $(this).width();
+
+    if(percentage >=0 && percentage <=1) {        
+        audioElement.audio.volume = percentage;
+      }
   });
 
 });
