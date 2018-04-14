@@ -19,6 +19,7 @@ $jsonArray = json_encode($resultArray);
 // console.log(<?php //echo $jsonArray; ?> );
 
 // document.ready means when the page first loads
+// Read more at: https://tinyurl.com/ybywrnra
 $(document).ready(function() {
   currentPlaylist = <?php echo $jsonArray; ?>;
   // audioElement object
@@ -28,6 +29,11 @@ $(document).ready(function() {
   // Displays the volume to full depicting the max volume when the page is loaded
   // Note that the function below has nothing to do with the volume being set to full
   updateVolumeProgressBar(audioElement.audio);
+
+  $("#nowPlayingBarContainer").on("mousedown touchstart mousemove touchmove", function(e) {
+    // Prevents default behavious of an event
+    e.preventDefault();
+  })
   
   // Progress bar controller
   $(".playbackBar .progressBar").mousedown(function() {
