@@ -22,10 +22,39 @@ $(document).ready(function() {
   currentPlaylist = <?php echo $jsonArray; ?>;
   // audioElement object
   audioElement = new Audio();
-
   // currentPlaylist[0] set from Line 22
-  setTrack(currentPlaylist[0], currentPlaylist, false); 
+  setTrack(currentPlaylist[0], currentPlaylist, false);
+  
+  $(".playbackBar .progressBar").mousedown(function() {
+    mouseDown = true;
+  });
+
+  $(".playbackBar .progressBar").mousemove(function(e) {
+    if(mouseDown) {
+      //Note the song's time depending upon the position of mouse curson on the progress bar
+      // this refers to the progress bar viz. 'playbackBar .progressBar'
+      timeFromOffset(e, this);
+    }
+  });
+
+  // Note the time even when mouse is up but in the progressBar region
+  $(".playbackBar .progressBar").mouseup(function(e) {
+    timeFromOffset(e,this);   
+  });
+
+  // Set mouseDown to false if the curson has moved away from the progress bar region
+  $(document).mouseup(function() {
+    mouseDown = false;
+  });
+
 });
+
+// Offset means how far the current progress bar position is or has moved from its initial position
+function timeFromOffset(mouse, progressBar) {
+  var percentage = mouse.offsetX / $(progressBar).width() * 100;
+  var seconds = audioElement.audio.duration * (percentage / 100);
+  audioElement.setTime(seconds);
+}
 
 // trackID = currentPlaylist[0] from Line 27, which is the value of the first Song Id fetched from the DB
 function setTrack(trackId, newPlaylist, play) {  
@@ -33,11 +62,11 @@ function setTrack(trackId, newPlaylist, play) {
   // AJAX call to get song data from DB. songId is got from jsonArray[0] in Line 14, 27
   // jsonArray[0] is the value of the first Song ID fetched from the DB
   // songId: trackId is the Ajax input
-  // function(data) is the output returned by the Ajax call, which is in the form of JSON data  
+  // function(data) is the output returned by the Ajax call, which is in the form of JSON 
   $.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) {
 
     // Converting JSON data into JS Object called track, so that JS can read it
-    // If JSON data isn't parsed JS won't be able to read it, resulting in an error
+    // If JSON data isn't parsed into JSON JS won't be able to read it, resulting in an error
     var track = JSON.parse(data);
     // console.log(track);
 
